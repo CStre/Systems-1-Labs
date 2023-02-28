@@ -1,0 +1,84 @@
+	.orig x3000
+	JSR STRCAT
+	PUTS
+	HALT
+;*************************SUBROUTINES*******************************
+
+FINDLAST
+	ST R0, SR0
+	ST R1, SR1
+TOP
+	LDR R1, R0, #0
+	BRZ END
+	ADD R0, R0, #1
+	BRNZP TOP
+END
+	ADD R0, R0, #-1
+	LD R1, SR1
+	RET
+
+STRCAT 
+	ST R2, SET2
+	ST R3, SET3
+	ST R4, SET4
+	ST R5, SET5
+	ST R7, SET7
+
+	ADD R5, R0, #0
+	ADD R2, R7,#0
+
+	JSR FINDLAST
+
+	ADD R7, R2, #0	
+	ADD R2, R0, #1
+	LDR R3, R1, #0
+	BRZ FOLL
+
+	LDR R3, R0, #0
+	BRZ NOPE
+
+	ADD R4, R1, #0
+
+TOOP
+	LDR R3, R4, #0
+	BRZ DONE
+
+	STR R3, R2, #0
+	ADD R4, R4, #1
+	ADD R2, R2, #1
+	BRNZP TOOP
+
+NOPE
+	ADD R0, R1, #0
+	BRNZP AFTER
+
+DONE
+	STR R3, R2, #0
+
+FOLL
+	ADD R0, R5, #0
+
+AFTER
+	LD R2, SET2
+	LD R3, SET3
+	LD R4, SET4
+	LD R5, SET5
+	LD R7, SET7
+	RET
+
+SET2	.fill 0
+SET3	.fill 0
+SET4	.fill 0
+SET5	.fill 0
+SET7	.fill 0
+SR0	.fill 0
+SR1	.fill 0
+	.end
+
+
+
+
+
+ 	
+
+	
